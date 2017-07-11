@@ -29,11 +29,8 @@ ServiceDefinition.build.csdef
 lib
 csx
 packages/
-LedgerscopeWeb/TestConsole/Playground.cs
 [Dd]ebug/
 [Tt]humbs.db
 *.sln.ide
 GeneratedAssemblyInfo.cs
-*.DotSettings.build/_NCrunch_LedgerscopeWeb/
-/LedgerscopeWeb/_NCrunch_LedgerscopeWeb/StoredText
 *.DotSettings
