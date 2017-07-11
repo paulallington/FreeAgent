@@ -43,7 +43,7 @@ namespace FreeAgent
             {
                 var token = CurrentAccessToken;
 
-
+                token.refresh_token = response.refresh_token;
                 token.access_token = response.access_token;
                 token.expires_in = response.expires_in;
 
