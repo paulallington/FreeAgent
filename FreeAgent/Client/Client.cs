@@ -13,8 +13,8 @@ namespace FreeAgent
 {
 	public partial class FreeAgentClient
 	{
-		private const string ApiBaseUrl = "https://api.freeagent.com";
-		private const string ApiSandboxBaseUrl = "https://api.sandbox.freeagent.com";
+		private Uri ApiBaseUrl = new Uri("https://api.freeagent.com");
+		private Uri ApiSandboxBaseUrl = new Uri("https://api.sandbox.freeagent.com");
 
 		public const string Version = "2";
 
@@ -53,7 +53,7 @@ namespace FreeAgent
 		/// <summary>
 		/// Gets the directory root for the requests (full or sandbox mode)
 		/// </summary>
-		private string BaseUrl
+		private Uri BaseUrl
 		{
 			get { return UseSandbox ? ApiSandboxBaseUrl : ApiBaseUrl; }
 		}
@@ -115,25 +115,27 @@ namespace FreeAgent
 			_restClient.Proxy = Proxy;
 		}
 
-		
 
 
 
-		/// <summary>
-		/// Helper Method to Build up the Url to authorize a Token/Secret
-		/// </summary>
-		/// <param name="userLogin"></param>
-		/// <param name="callback"></param>
-		/// <returns></returns>
-		public string BuildAuthorizeUrl(string callback = null)
+
+        /// <summary>
+        /// Helper Method to Build up the Url to authorize a Token/Secret
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="state"></param>
+        /// <returns>Authorize Url</returns>
+        public string BuildAuthorizeUrl(string callback = null, string state = null)
 		{
+            var redirectUriParamAndValue = string.IsNullOrEmpty(callback) 
+                ? string.Empty 
+                : $"&redirect_uri={callback.UrlEncode()}";
 
-			//Go 1-Liner!
-			return string.Format("{0}/v{1}/approve_app?response_type=code&client_id={2}{3}&state=foo",
-				BaseUrl,
-				Version,
-				_apiKey,
-				(string.IsNullOrEmpty(callback) ? string.Empty : "&redirect_uri=" + callback.UrlEncode()));
+            var stateParamAndValue = string.IsNullOrEmpty(state)
+                ? string.Empty
+                : $"&state={state}";
+
+            return $"{BaseUrl}/v{Version}/approve_app?response_type=code&client_id={_apiKey}{redirectUriParamAndValue}{stateParamAndValue}";
 		}
 
 		public string ExtractCodeFromUrl(string url)
