@@ -19,6 +19,16 @@ namespace FreeAgent
         public string company_registration_number { get; set; }
         public string sales_tax_registration_status { get; set; }
         public string sales_tax_registration_number { get; set; }
+        public string address1 { get; set; }
+        public string address2 { get; set; }
+        public string address3 { get; set; }
+        public string town { get; set; }
+        public string region { get; set; }
+        public string postcode { get; set; }
+        public string country { get; set; }
+        public string contact_email { get; set; }
+        public string contact_phone { get; set; }
+        public string website { get; set; }
     }
 
     public class CompanyWrapper
