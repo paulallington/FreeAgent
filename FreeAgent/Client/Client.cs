@@ -173,9 +173,10 @@ namespace FreeAgent
 		public CategoryClient Categories = null;
 		public BankTransactionClient BankTransaction = null;
 		public BankTransactionExplanationClient BankTransactionExplanation = null;
-		public BillClient Bill = null;
+	    public BillClient Bill = null;
+	    public PayrollClient Payroll = null;
 
-		private void SetupClients()
+        private void SetupClients()
 		{
 			Company = new CompanyClient(this);
 			Accounting = new AccountingClient(this);
@@ -191,6 +192,7 @@ namespace FreeAgent
 			BankTransaction = new BankTransactionClient(this);
 			BankTransactionExplanation = new BankTransactionExplanationClient(this);
 			Bill = new BillClient(this);
+            Payroll = new PayrollClient(this);
 		}
 
 

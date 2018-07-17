@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using RestSharp;
 
 
@@ -20,6 +21,7 @@ namespace FreeAgent.Helpers
         public RequestHelper(string version)
         {
             _version = version;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
         }
 
         /*
@@ -176,16 +178,16 @@ namespace FreeAgent.Helpers
 		
 */
 
-        
-		
-		public RestRequest CreateAccessTokenRequest(string code, string callbackurl = "")
+
+
+        public RestRequest CreateAccessTokenRequest(string code, string callbackurl = "")
 		{
 			// grant_type=authorization_code
 			// code=<the code from the url>
 			// redirect_url = <if it was provided before>
 			
 			var request = new RestRequest(Method.POST);
-			request.Resource = "v{version}/token_endpoint";
+			request.Resource = $"v2/token_endpoint";
 			request.AddParameter("version", _version, ParameterType.UrlSegment);
             request.AddParameter("code", code, ParameterType.GetOrPost);
             request.AddParameter("grant_type", "authorization_code", ParameterType.GetOrPost);
@@ -210,7 +212,7 @@ namespace FreeAgent.Helpers
 
             
             var request = new RestRequest(Method.POST);
-            request.Resource = "v{version}/token_endpoint";
+            request.Resource = "v2/token_endpoint";
             request.AddParameter("version", _version, ParameterType.UrlSegment);
             request.AddParameter("grant_type", "refresh_token", ParameterType.GetOrPost);
             request.AddParameter("client_id", ApiKey, ParameterType.GetOrPost);
